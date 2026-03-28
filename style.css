@@ -509,3 +509,7 @@ footer {
         margin-right: 1rem;
     }
 }
+.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
