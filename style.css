@@ -1,0 +1,511 @@
+/* ==========================================================================
+   1. CSS VARIABLES & THEMING
+   ========================================================================== */
+:root {
+    /* Color Palette - Light Mode (Default) */
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --accent-color: #3b82f6;
+    --accent-hover: #2563eb;
+    --border-color: #e2e8f0;
+    
+    /* Typography */
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Fira Code', 'Courier New', monospace;
+    
+    /* Spacing & Layout */
+    --section-pad: clamp(4rem, 10vw, 8rem) 0;
+    --container-width: 1100px;
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --accent-color: #60a5fa;
+        --accent-hover: #93c5fd;
+        --border-color: #334155;
+    }
+}
+
+/* For manual JS toggle later */
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-color: #60a5fa;
+    --border-color: #334155;
+}
+
+/* ==========================================================================
+   2. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color var(--transition-smooth), color var(--transition-smooth);
+}
+
+ul { list-style: none; }
+a { text-decoration: none; color: inherit; transition: color var(--transition-fast); }
+img { max-width: 100%; height: auto; display: block; }
+
+main {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY & COMPONENTS
+   ========================================================================== */
+h1, h2, h3, h4 {
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    gap: 1.5rem;
+}
+
+.section-header h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    white-space: nowrap;
+}
+
+.section-header hr {
+    flex-grow: 1;
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary, .btn-email {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: 2px solid var(--accent-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* ==========================================================================
+   4. NAVIGATION
+   ========================================================================== */
+header#top-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    background-color: rgba(var(--bg-primary), 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.logo a {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+#theme-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   5. HERO SECTION
+   ========================================================================== */
+.hero-section {
+    display: min-height;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--section-pad);
+    gap: 4rem;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.greeting {
+    font-family: var(--font-mono);
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.main-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    margin-bottom: 1.5rem;
+}
+
+.tagline {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+}
+
+.cta-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.profile-frame {
+    flex-shrink: 0;
+    width: 350px;
+    height: 350px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 4px solid var(--border-color);
+    box-shadow: 20px 20px 0 var(--accent-color);
+    transition: transform var(--transition-smooth);
+}
+
+.profile-frame:hover {
+    transform: translate(-10px, -10px);
+    box-shadow: 30px 30px 0 var(--accent-color);
+}
+
+/* ==========================================================================
+   6. CONTENT BLOCKS (About, Experience)
+   ========================================================================== */
+.content-block {
+    padding: var(--section-pad);
+}
+
+.recent-tech {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+}
+
+.recent-tech li::before {
+    content: '▹';
+    color: var(--accent-color);
+    margin-right: 0.5rem;
+}
+
+.experience-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.job-card {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+.job-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.company {
+    color: var(--accent-color);
+}
+
+.job-date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.job-responsibilities li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.job-responsibilities li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}
+
+/* ==========================================================================
+   7. PROJECTS GRID
+   ========================================================================== */
+.project-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.project-card {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    gap: 2rem;
+}
+
+.project-image {
+    grid-column: 1 / 8;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 10px 30px -15px rgba(0,0,0,0.3);
+}
+
+.project-image img {
+    transition: transform var(--transition-smooth);
+}
+
+.project-image:hover img {
+    transform: scale(1.05);
+}
+
+.project-info {
+    grid-column: 7 / -1;
+    text-align: right;
+    z-index: 10;
+}
+
+/* Alternate layout for even projects */
+.project-card:nth-child(even) .project-image { grid-column: 6 / -1; }
+.project-card:nth-child(even) .project-info { grid-column: 1 / 7; text-align: left; }
+
+.project-label {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.project-desc {
+    background-color: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin: 1.5rem 0;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px -15px rgba(0,0,0,0.1);
+}
+
+.project-tags {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.project-card:nth-child(even) .project-tags { justify-content: flex-start; }
+
+.project-links a {
+    margin-left: 1rem;
+    font-size: 1.25rem;
+}
+.project-card:nth-child(even) .project-links a { margin-left: 0; margin-right: 1rem; }
+
+/* ==========================================================================
+   8. SKILLS & CONTACT
+   ========================================================================== */
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.skill-category {
+    background-color: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.skill-category h4 {
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    font-size: 1.1rem;
+}
+
+.skill-category li {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.contact-center {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-center h3 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1.5rem;
+}
+
+.contact-center p {
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+}
+
+/* ==========================================================================
+   9. FOOTER
+   ========================================================================== */
+footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-links a {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+}
+
+.copyright {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   10. RESPONSIVE MEDIA QUERIES (Mobile Adjustments)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* In a real app, you'd add a hamburger menu here */
+    }
+    
+    .hero-section {
+        flex-direction: column-reverse;
+        justify-content: center;
+        text-align: center;
+        padding-top: 120px;
+    }
+    
+    .cta-group {
+        justify-content: center;
+    }
+    
+    .profile-frame {
+        width: 250px;
+        height: 250px;
+        box-shadow: 10px 10px 0 var(--accent-color);
+    }
+    
+    .project-card, .project-card:nth-child(even) {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .project-info, .project-card:nth-child(even) .project-info {
+        text-align: left;
+    }
+    
+    .project-tags, .project-card:nth-child(even) .project-tags {
+        justify-content: flex-start;
+    }
+    
+    .project-links a {
+        margin-left: 0;
+        margin-right: 1rem;
+    }
+}
